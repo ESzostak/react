@@ -15,8 +15,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+<<<<<<< HEAD
     "eject": "react-scripts eject",
     "homepage": "./public"
+=======
+    "eject": "react-scripts eject"
+>>>>>>> 74c6711f01d1d449efb8a2d9f2cae70e7e16ebc4
   },
   "eslintConfig": {
     "extends": [

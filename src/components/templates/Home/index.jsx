@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { useState } from 'react';
+=======
+import { Component } from 'react';
+>>>>>>> 74c6711f01d1d449efb8a2d9f2cae70e7e16ebc4
 
 import './styles.css';
 
@@ -6,6 +10,7 @@ import { Posts } from '../../posts/index.jsx';
 import { loadPosts } from '../../../utils/load-posts';
 import { Button } from '../../Button';
 import { TextInput } from '../../TextInput';
+<<<<<<< HEAD
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 
@@ -37,10 +42,44 @@ export const Home = () => {
  
 
   const loadMorePosts = () => {
+=======
+
+class Home extends Component {
+  state = {
+    posts: [],
+    allPosts: [],
+    page: 0,
+    postsPerPage: 3,
+    searchValue: '',
+  };
+
+  async componentDidMount() {
+    this.loadPosts();
+  }
+
+  loadPosts = async () => {
+    const { page, postsPerPage } = this.state;
+
+    const postsAndPhotos = await loadPosts();
+    this.setState({
+      posts: postsAndPhotos.slice(page, postsPerPage),
+      allPosts: postsAndPhotos,
+    });
+  } 
+
+  loadMorePosts = () => {
+    const {
+      page,
+      postsPerPage,
+      allPosts,
+      posts
+    } = this.state;
+>>>>>>> 74c6711f01d1d449efb8a2d9f2cae70e7e16ebc4
     const nextPage = page + postsPerPage;
     const nextPosts = allPosts.slice(nextPage, nextPage + postsPerPage);
     posts.push(...nextPosts);
 
+<<<<<<< HEAD
     setPosts(posts);
     setPage(nextPage);
   }  
@@ -83,5 +122,57 @@ export const Home = () => {
 }  
 
 const teste = 0;
+=======
+    this.setState({posts, page: nextPage});
+  }  
+
+  handleChange = (e) => {
+    const { value } = e.target;
+    this.setState({ searchValue: value });
+  }
+
+  render() {
+    const { posts, page, postsPerPage, allPosts, searchValue } = this.state;
+    const noMorePosts = page + postsPerPage >=  allPosts.length;
+
+    const filteredPosts = !!searchValue ?
+      allPosts.filter(post => {
+        return post.title.toLowerCase().includes(searchValue.toLowerCase());
+      })
+    : posts;
+
+    return (
+      <section className="container">
+        <div className="search-container">
+          {!!searchValue && (
+              <h1>Search Value: {searchValue}</h1>
+          )}
+          
+          <TextInput searchValue={searchValue} handleChange={this.handleChange}/>
+        </div>
+          
+
+        {filteredPosts.length > 0 && (
+          <Posts posts={ filteredPosts } />
+        )}
+
+        {filteredPosts.length === 0 && (
+          <p>Não existem posts!</p>
+        )}
+        
+          <div className="button-container">
+            {!searchValue && (
+              <Button 
+                text="Load more Posts"
+                onClick={this.loadMorePosts} //onClick = atributo
+                disabled={noMorePosts}
+              />
+            )}  
+          </div>  
+      </section>  
+    ); 
+  }
+}
+>>>>>>> 74c6711f01d1d449efb8a2d9f2cae70e7e16ebc4
 
 export default Home;
