@@ -82,4 +82,6 @@ export const Home = () => {
   ); 
 }  
 
+const teste = 0;
+
 export default Home;
